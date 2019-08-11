@@ -18,3 +18,5 @@ router.register('exam', ExamViewSet, base_name='exam')
 router.register('answer', AnswerViewSet, base_name='answer')
 router.register('submission', SubmissionViewSet, base_name='submission')
 urlpatterns = router.urls
+urlpatterns.append(path('unquestions/',views.get_unanswered_questions, name='getQuestion'),)
+urlpatterns.append(path('allsubmission/',views.get_submission, name='getSubmissionr'),)
