@@ -32,11 +32,12 @@ class SubmissionViewSet(viewsets.ModelViewSet):
 	serializer_class = serializers.SubmissionSerializer  
 
 
-#get unanswered question based on userid 
+#get unanswered question based on userid ans exam id
 def get_unanswered_questions(request:HttpResponse):
 	userid=request.GET.get('userid'); 
-	answered_questions = models.Submission.objects.filter(user__pk=userid).values_list('question__pk', flat=True);
-	questions_set= models.Question.objects.exclude(pk__in=answered_questions)
+	examid=request.GET.get('examid'); 
+	answered_questions = models.Submission.objects.filter(user__pk=userid,question__exam__id=examid).values_list('question__pk', flat=True);
+	questions_set= models.Question.objects.exclude(pk__in=answered_questions).filter(exam__id=examid)
 	serializer= serializers.QuestionSerializer(questions_set,many=True) 
 	return  HttpResponse(serializer.data)
 

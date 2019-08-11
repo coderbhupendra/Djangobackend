@@ -15,21 +15,23 @@ class Answer(models.Model):
 
 	def __str__(self):
 		return self.answer_text
+		
+class Exam(models.Model):
+	name = models.CharField(max_length=64, verbose_name=u'Exam name', )
+
+	def __str__(self):
+		return self.name
 
 class Question(models.Model):
 	question_text = models.CharField(max_length=256, verbose_name=u'Question\'s text')
 	answer = models.OneToOneField(Answer, on_delete=models.CASCADE,related_name='correct_answer', null=True, blank=True)
 	choices = models.ManyToManyField(Answer, related_name='choices')
+	exam= models.ForeignKey(Exam, related_name='exam',on_delete=models.PROTECT)
 
 	def __str__(self):
 		return "{content}".format(content=self.question_text)
 
-class Exam(models.Model):
-	name = models.CharField(max_length=64, verbose_name=u'Exam name', )
-	question = models.ManyToManyField(Question, blank=True)
 
-	def __str__(self):
-		return self.name
 
 class Submission(models.Model):
 	user= models.ForeignKey(User, related_name='user',on_delete=models.PROTECT)
