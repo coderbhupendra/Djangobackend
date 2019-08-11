@@ -26,7 +26,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
-    queryset = models.Question.objects.all().prefetch_related('answer')
+    queryset = models.Question.objects.all()
     serializer_class = serializers.QuestionSerializer 
 
 class ExamViewSet(viewsets.ModelViewSet):
@@ -34,7 +34,7 @@ class ExamViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ExamSerializer     
 
 class AnswerViewSet(viewsets.ModelViewSet):
-    queryset = models.Answer.objects.all().prefetch_related('question')
+    queryset = models.Answer.objects.all()
     serializer_class = serializers.AnswerSerializer 
 
 class SubmissionViewSet(viewsets.ModelViewSet):
